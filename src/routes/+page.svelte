@@ -44,41 +44,17 @@
     return char;
   }
 
-  function getStartingSquare(string: string) {
-    let startSquareShift: number = 1;
-    switch (string.length) {
-      case 10:
-        startSquareShift = 0;
-        break;
-      case 9:
-        startSquareShift = 28;
-        break;
-      case 8:
-        startSquareShift = 35;
-        break;
-      case 7:
-        startSquareShift = 56;
-        break;
-      case 6:
-        startSquareShift = 77;
-        break;
-      case 5:
-        startSquareShift = 91;
-        break;
-      case 4:
-        startSquareShift = 112;
-        break;
-      case 3:
-        startSquareShift = 133;
-        break;
-      case 2:
-        startSquareShift = 154;
-        break;
-      case 1:
-        startSquareShift = 175;
-        break;
+  function getNearestMultipleOfSeven(num: number) {
+    if (num % 7 === 0) {
+      return num
+    } else {
+      return getNearestMultipleOfSeven(num+1)
     }
-    return startSquareShift;
+  }
+
+  function getStartingSquare(width: number) {
+    const startSquare = 182 - Math.floor((width*7)/2)
+    return getNearestMultipleOfSeven(startSquare)
   }
 
   function getTotalWidth(string: string) {
@@ -108,13 +84,13 @@
   $: if (wordToWrite) {
 
     wordToWrite = wordToWrite.toLocaleLowerCase()
-    
+
     let numberOfCommits = commitDays.length;
     commitDays = [];
 
     let dataObj = getWordData(wordToWrite);
 
-    const startingSquareShift = getStartingSquare(wordToWrite);
+    const startingSquareShift = getStartingSquare(getTotalWidth(wordToWrite));
 
     for (let i = 0; i < wordToWrite.length; i++) {
       let currentLetter = getCurrentLetter(wordToWrite[i]);
